@@ -1,4 +1,4 @@
-import { features } from '../config/siteContent.js';
+import { features } from '../config/siteContent.js?v=4';
 import { FeatureCard } from './FeatureCard.js';
 
 export const FeaturesSection = () => {

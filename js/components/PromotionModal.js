@@ -1,7 +1,9 @@
-import { siteConfig, whatsappUrl } from '../config/siteContent.js';
+import { whatsappUrl } from '../config/siteContent.js?v=5';
+import { formatPromotionDeadline } from '../config/promotion.js';
 
-export const PromotionModal = () => {
-  const claimMessage = `Hola, quiero consultar por la promoción de Halloween con el código ${siteConfig.promotionCode}`;
+export const PromotionModal = promotion => {
+  const claimMessage = `Hola, quiero consultar por la promoción de Halloween con el código ${promotion.promotionCode}`;
+  const deadlineLabel = formatPromotionDeadline(promotion.promotionEndsAt);
 
   return `
     <dialog class="promotion-modal" id="promotion-modal" aria-labelledby="promotion-title" aria-describedby="promotion-description">
@@ -12,9 +14,9 @@ export const PromotionModal = () => {
         <section class="promotion-content">
           <button class="promotion-close" type="button" aria-label="Cerrar promoción">×</button>
           <p class="promotion-eyebrow">✦ Una promoción de miedo ✦</p>
-          <div class="promotion-discount" aria-label="${siteConfig.promotionDiscount} por ciento de descuento">
+          <div class="promotion-discount" aria-label="${promotion.promotionDiscount} por ciento de descuento">
             <span class="discount-spark" aria-hidden="true">✦</span>
-            <strong>${siteConfig.promotionDiscount}<span>%</span></strong>
+            <strong>${promotion.promotionDiscount}<span>%</span></strong>
             <span class="discount-copy">DE<br>DESCUENTO</span>
             <span class="discount-spark" aria-hidden="true">✦</span>
           </div>
@@ -27,7 +29,7 @@ export const PromotionModal = () => {
           <div class="promotion-code">
             <div>
               <span class="promotion-code-label">Tu código promocional</span>
-              <strong id="promotion-code">${siteConfig.promotionCode}</strong>
+              <strong id="promotion-code">${promotion.promotionCode}</strong>
             </div>
             <button class="promotion-copy" id="copy-promotion-code" type="button">▢ Copiar</button>
           </div>
@@ -36,7 +38,7 @@ export const PromotionModal = () => {
             <a class="primary-button whatsapp-button" href="${whatsappUrl(claimMessage)}" target="_blank" rel="noopener noreferrer">Reclamar por WhatsApp</a>
             <button class="promotion-dismiss" id="dismiss-promotion" type="button">Seguir navegando</button>
           </div>
-          <p class="promotion-terms">Promoción sujeta a disponibilidad. Consulta las condiciones por WhatsApp.</p>
+          <p class="promotion-terms">Válida hasta el ${deadlineLabel}. Sujeta a disponibilidad. Consulta las condiciones por WhatsApp.</p>
         </section>
       </div>
     </dialog>

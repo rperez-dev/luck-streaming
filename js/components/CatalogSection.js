@@ -1,4 +1,4 @@
-import { platforms } from '../config/siteContent.js';
+import { platforms } from '../config/siteContent.js?v=4';
 import { CatalogTile } from './CatalogTile.js';
 
 export const CatalogSection = () => {

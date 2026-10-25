@@ -1,5 +1,6 @@
 export const initializeSiteNavigation = () => {
   const links = [...document.querySelectorAll('.nav-link')];
+  const sectionLinks = links.filter(link => link.getAttribute('href')?.startsWith('#'));
   const navigation = document.getElementById('main-nav');
   const menuToggle = document.getElementById('menu-toggle');
 
@@ -15,9 +16,9 @@ export const initializeSiteNavigation = () => {
     menuToggle.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
   });
 
-  links.forEach(link => {
+  sectionLinks.forEach(link => {
     link.addEventListener('click', () => {
-      links.forEach(item => {
+      sectionLinks.forEach(item => {
         const selected = item === link;
         item.classList.toggle('active', selected);
         if (selected) item.setAttribute('aria-current', 'page');
@@ -27,7 +28,7 @@ export const initializeSiteNavigation = () => {
     });
   });
 
-  const sections = links
+  const sections = sectionLinks
     .map(link => document.querySelector(link.getAttribute('href')))
     .filter(section => section instanceof HTMLElement);
 

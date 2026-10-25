@@ -1,13 +1,14 @@
-import { siteConfig } from '../config/siteContent.js';
+import { formatPromotionDeadline } from '../config/promotion.js';
 
-export const initializePromotionCountdown = () => {
+export const initializePromotionCountdown = promotion => {
   const timer = document.getElementById('promotion-timer');
   if (!(timer instanceof HTMLButtonElement)) return;
 
-  const deadline = Date.parse(siteConfig.promotionEndsAt);
+  const deadline = Date.parse(promotion.promotionEndsAt);
   if (Number.isNaN(deadline)) {
-    throw new Error(`Fecha de vencimiento de promoción inválida: ${siteConfig.promotionEndsAt}`);
+    throw new Error(`Fecha de vencimiento de promoción inválida: ${promotion.promotionEndsAt}`);
   }
+  const deadlineLabel = formatPromotionDeadline(promotion.promotionEndsAt);
 
   const parts = {
     days: document.getElementById('countdown-days'),
@@ -33,7 +34,7 @@ export const initializePromotionCountdown = () => {
 
     if (remaining === 0) {
       timer.classList.add('is-expired');
-      timer.setAttribute('aria-label', `Abrir promoción. La oferta venció el ${siteConfig.promotionDeadlineLabel}.`);
+      timer.setAttribute('aria-label', `Abrir promoción. La oferta venció el ${deadlineLabel}.`);
       window.clearInterval(intervalId);
     }
   };
